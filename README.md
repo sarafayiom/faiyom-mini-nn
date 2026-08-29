@@ -1,31 +1,34 @@
-faiyom-mini-nn
-A modular, lightweight Deep Learning framework built entirely from scratch using Python and NumPy. This framework provides a dynamic architecture that allows users to define custom hidden layers, activation functions, optimization algorithms, and weight initialization strategies to ensure stable training dynamics.
+# faiyom-mini-nn
 
- Key Features
-Modular Layer Architecture: Complete flexibility to stack Affine (Dense), Activation, Batch Normalization, and Dropout layers.
+A modular, lightweight Deep Learning framework built entirely **from scratch** using Python and NumPy. This framework provides a dynamic architecture that allows users to define custom hidden layers, activation functions, optimization algorithms, and weight initialization strategies to ensure stable training dynamics.
 
-Custom Optimizers & Initializers: Built-in support for multiple optimization techniques and weight initialization methods.
+---
 
-Dynamic Model Construction: Flexible interface using Enums and Mapping mechanisms to parse user-defined architectures easily.
+##  Key Features
 
-Automated Hyperparameter Tuning: Integrated Random Search module to discover optimal learning rates, batch sizes, and depth configurations.
+* **Modular Layer Architecture:** Complete flexibility to stack Affine (Dense), Activation, Batch Normalization, and Dropout layers.
+* **Custom Optimizers & Initializers:** Built-in support for multiple optimization techniques and weight initialization methods.
+* **Dynamic Model Construction:** Flexible interface using `Enums` and `Mapping` mechanisms to parse user-defined architectures easily.
+* **Automated Hyperparameter Tuning:** Integrated Random Search module to discover optimal learning rates, batch sizes, and depth configurations.
 
- Project Structure
-layers.py: Base abstract layer class and all inheriting concrete layers (Affine, Activation, Loss, Dropout, Batch Normalization).
+---
 
-optimizer.py: Optimization algorithms derived from a common abstract base class (e.g., SGD, Adam).
+## 📁 Project Structure
 
-initializer.py: Weight initialization strategies to prevent vanishing/exploding gradients.
+* **`layers.py`**: Base abstract layer class and all inheriting concrete layers (Affine, Activation, Loss, Dropout, Batch Normalization).
+* **`optimizer.py`**: Optimization algorithms derived from a common abstract base class (e.g., SGD, Adam).
+* **`initializer.py`**: Weight initialization strategies to prevent vanishing/exploding gradients.
+* **`trainer.py`**: Training loop abstraction handling batch splitting, weight updates, loss/accuracy tracking, and the automated `RandomSearch` hyperparameter tuner.
+* **`neural_network.py`**: Core model wrapper that orchestrates layers, gradient computations, predictions, and architecture summary visualizers.
 
-trainer.py: Training loop abstraction handling batch splitting, weight updates, loss/accuracy tracking, and the automated RandomSearch hyperparameter tuner.
+---
 
-neural_network.py: Core model wrapper that orchestrates layers, gradient computations, predictions, and architecture summary visualizers.
+##  Usage Example
 
- Usage Example
-1. Define Model Architecture
+### 1. Define Model Architecture
 Define hidden layers using ordered tuples specifying layer type, parameters, or activation functions:
 
-Python
+```python
 from faiyomMiniNN.neural_network import NeuralNetwork, LayerType, ActivationType
 
 hidden_layers_order = [
@@ -47,10 +50,12 @@ model = NeuralNetwork(
 
 # Display network topology
 model.show_layers()
-2. Train the Network
+```
+
+### 2. Train the Network
 Pass the model along with training and evaluation datasets to the Trainer class:
 
-Python
+```python
 from faiyomMiniNN.trainer import Trainer
 from faiyomMiniNN.optimizer import Adam
 
@@ -64,10 +69,12 @@ trainer = Trainer(
 print("\nTraining in progress...")
 trainer.fit()
 trainer.show_results()
-3. Hyperparameter Tuning
+```
+
+### 3. Hyperparameter Tuning
 Automate hyperparameter optimization using Random Search:
 
-Python
+```python
 # Run random search over specified search spaces
 best_params, best_score = tuner.run_random_search(
     lrs, batches, iters_list, h_sizes, layers_counts, n_iter=5
@@ -75,9 +82,13 @@ best_params, best_score = tuner.run_random_search(
 
 # Display optimal parameters
 tuner.show_best_results()
+```
 
- Sample Output (Iris Dataset Evaluation)
-Plaintext
+---
+
+##  Sample Output (Iris Dataset Evaluation)
+
+```text
 -- Network Architecture --
 Affine1
 Sigmoid1
@@ -108,18 +119,23 @@ Initial Accuracy (Train): 0.9667
 Initial Accuracy (Test) : 1.0000
 Final Accuracy (Train)  : 0.9417
 Final Accuracy (Test)   : 0.9333
+```
 
+---
 
- How to Run Locally
+##  How to Run Locally
+
 Clone the repository:
-
-
+```bash
 git clone https://github.com/sarafayiom/faiyom-mini-nn.git
+```
+
 Navigate to directory:
-
-
+```bash
 cd faiyom-mini-nn
+```
+
 Run tests/example script:
-
-
+```bash
 python test/main.py
+```
